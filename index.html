@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Case Study | Mango Labs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(160deg, #1A120B 0%, #2D1F10 40%, #1F150C 100%);
+            color: #E8DDD0; line-height: 1.75; min-height: 100vh;
+        }
+        .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Top bar */
+        .top-bar {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 48px;
+        }
+        .top-bar img { height: 30px; width: auto; }
+        .top-bar .x { color: #9A8060; font-size: 1.1rem; margin: 0 2px; }
+
+        /* Hero */
+        .hero {
+            text-align: center; padding: 56px 24px 48px;
+            background: linear-gradient(180deg, rgba(218,165,80,0.10) 0%, transparent 100%);
+            border-radius: 20px; margin-bottom: 48px;
+            border: 1px solid rgba(218,165,80,0.15);
+        }
+        .hero h1 { font-size: 3rem; color: #fff; letter-spacing: 4px; margin-bottom: 6px; }
+        .hero .sub { font-size: 1.1rem; color: #C4A265; margin-bottom: 28px; }
+        .tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+        .tag {
+            background: rgba(218,165,80,0.10); color: #DAA550; padding: 5px 14px;
+            border-radius: 18px; font-size: 0.82rem; border: 1px solid rgba(218,165,80,0.25);
+        }
+        .big-number {
+            font-size: 2.4rem; font-weight: 700;
+            background: linear-gradient(90deg, #DAA550, #E8734A);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .big-label { font-size: 0.95rem; color: #9A8060; margin-top: 4px; }
+
+        /* Stat row */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+        .stat {
+            background: rgba(218,165,80,0.06); border: 1px solid rgba(218,165,80,0.14);
+            border-radius: 12px; padding: 20px; text-align: center;
+        }
+        .stat .v { font-size: 1.6rem; font-weight: 700; color: #DAA550; }
+        .stat .l { font-size: 0.82rem; color: #9A8060; margin-top: 4px; }
+
+        /* Card */
+        .card {
+            background: rgba(255,255,255,0.022); border: 1px solid rgba(218,165,80,0.10);
+            border-radius: 16px; padding: 36px; margin-bottom: 28px;
+        }
+        .card h2 {
+            font-size: 1.35rem; color: #fff; margin-bottom: 18px;
+            padding-bottom: 10px; border-bottom: 2px solid rgba(218,165,80,0.30);
+        }
+        .card h3 { font-size: 1.05rem; color: #DAA550; margin: 22px 0 10px; }
+        .card p { margin-bottom: 12px; font-size: 0.95rem; }
+
+        /* Accent card (inner) */
+        .accent {
+            background: rgba(218,165,80,0.05); border: 1px solid rgba(218,165,80,0.12);
+            border-radius: 12px; padding: 24px; margin: 18px 0;
+        }
+        .accent h4 { color: #DAA550; margin-bottom: 12px; font-size: 1.05rem; }
+
+        /* Left-border callout */
+        .callout {
+            border-left: 3px solid #9A8060; padding: 14px 18px; margin: 12px 0;
+            background: rgba(232,115,74,0.04); border-radius: 0 8px 8px 0;
+        }
+        .callout strong { color: #E8C9A0; }
+
+        /* Quote */
+        blockquote {
+            border-left: 3px solid #DAA550; padding-left: 16px;
+            margin: 18px 0; color: #C4A265; font-style: italic; font-size: 0.95rem;
+        }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.9rem; }
+        th, td { padding: 11px 14px; text-align: left; border-bottom: 1px solid rgba(218,165,80,0.10); }
+        th { background: rgba(218,165,80,0.10); color: #DAA550; font-weight: 600; }
+        tr:hover { background: rgba(255,255,255,0.015); }
+        .pos { color: #E8734A; font-weight: 600; }
+
+        /* Method pill */
+        .mpill {
+            display: inline-block; background: rgba(232,115,74,0.10); color: #E8A07A;
+            padding: 4px 12px; border-radius: 6px; font-size: 0.82rem;
+            margin: 4px 4px 4px 0; border: 1px solid rgba(232,115,74,0.20);
+        }
+
+        /* Steps */
+        .steps { margin: 10px 0 10px 18px; }
+        .steps li { margin-bottom: 7px; font-size: 0.93rem; }
+        .steps li strong { color: #E8A07A; }
+
+        /* Timeline */
+        .tl { position: relative; padding-left: 28px; margin: 16px 0; }
+        .tl::before {
+            content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(180deg, #DAA550, #E8734A);
+        }
+        .tl-item { position: relative; padding: 10px 0; }
+        .tl-item::before {
+            content: ''; position: absolute; left: -25px; top: 15px;
+            width: 10px; height: 10px; background: #DAA550;
+            border-radius: 50%; border: 2px solid #1A120B;
+        }
+        .tl-date { color: #DAA550; font-weight: 600; font-size: 0.85rem; }
+
+        /* Image placeholder */
+        .ph {
+            width: 100%; min-height: 200px;
+            background: rgba(255,255,255,0.02); border: 2px dashed rgba(218,165,80,0.18);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: #6B5A42; font-size: 0.88rem; margin: 14px 0;
+            flex-direction: column; gap: 5px;
+        }
+        .ph .ico { font-size: 1.8rem; opacity: 0.3; }
+        .ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .ph-grid .ph { min-height: 170px; }
+
+        .evidence-image { width: 100%; border-radius: 12px; margin: 14px 0; border: 1px solid rgba(218,165,80,0.12); }
+
+        /* Two-col layout */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 18px 0; }
+
+        /* Footer */
+        .foot { text-align: center; padding: 44px 20px; color: #5A4A35; }
+        .foot img { height: 30px; width: auto; margin-bottom: 8px; }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .big-number { font-size: 1.8rem; }
+            .stats { grid-template-columns: 1fr 1fr; }
+            .ph-grid, .two-col { grid-template-columns: 1fr; }
+            .card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <!-- Top bar: logos left-aligned -->
+    <div class="top-bar">
+        <img src="https://i.imgur.com/EgHEnTN.png" alt="Mango Labs">
+        <span class="x">×</span>
+        <img src="https://i.imgur.com/tLeEn6G.jpg" alt="Sign" style="border-radius:5px;">
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>SIGN</h1>
+        <p class="sub">SIGN MAKES TRUST PROGRAMMABLE</p>
+        <div class="tags">
+            <span class="tag">Narrative Building</span>
+            <span class="tag">Creative Marketing</span>
+            <span class="tag">KOL Distribution</span>
+            <span class="tag">Community Ops</span>
+            <span class="tag">Offline Events</span>
+            <span class="tag">Founder IP</span>
+        </div>
+        <div class="big-number">Listed on Binance + Upbit Spot</div>
+        <p class="big-label">Pre-TGE full-stack support → Two top-tier exchange listings</p>
+        <p style="margin-top:14px;color:#5A4A35;font-size:0.88rem;">Jan 2025 — May 2025 · Pre-TGE · Infrastructure / L1L2</p>
+    </section>
+
+    <!-- Key numbers -->
+    <div class="stats">
+        <div class="stat"><div class="v">1.5M+</div><div class="l">Contracts Signed</div></div>
+        <div class="stat"><div class="v">200M+</div><div class="l">Sign Pass Attestations</div></div>
+        <div class="stat"><div class="v">2M+</div><div class="l">EthSign Users</div></div>
+        <div class="stat"><div class="v">$15M</div><div class="l">TokenTable Revenue</div></div>
+    </div>
+
+    <!-- About Sign -->
+    <div class="card">
+        <h2>About Sign</h2>
+        <p><strong style="color:#fff;">Sign</strong> (<a href="https://sign.global" style="color:#DAA550;">sign.global</a>) is a Web3 sovereign trust infrastructure for global nations. Four product pillars: EthSign (on-chain signing, 2M+ users, 1.5M contracts, future human-AI signing protocol), TokenTable (token distribution, "the Goldman Sachs of crypto," $15M revenue), Sign Pass (global identity — Sierra Leone PR, UAE Golden Visa), and Sign Protocol as the underlying layer.</p>
+        <p>One of the most anticipated Pre-TGE infrastructure projects — with Mango Labs' full-stack marketing support, Sign successfully listed on both Binance and Upbit spot markets.</p>
+    </div>
+
+    <!-- The Problem -->
+    <div class="card">
+        <h2>Where Sign Stood Before We Came In</h2>
+        <table>
+            <tr><th>Metric</th><th>Status</th></tr>
+            <tr><td>Brand Narrative</td><td>No unified story — four product lines in silos, market saw "an on-chain contract signing tool"</td></tr>
+            <tr><td>CN Community</td><td>Existed but small in scale</td></tr>
+            <tr><td>KOL Coverage</td><td>No meaningful mindshare; lacking systematic KOL promotion</td></tr>
+            <tr><td>Offline Presence</td><td>Existed but very limited</td></tr>
+        </table>
+
+        <p style="margin-top:16px;">Three things needed fixing:</p>
+        <div class="callout">
+            <strong>Fragmented identity.</strong> Four products, zero unified narrative. The market couldn't see past "on-chain signing tool" — nowhere near the vision of global trust infrastructure.
+        </div>
+        <div class="callout">
+            <strong>Underleveraged CN market.</strong> Some KOL coverage existed but lacked a systematic distribution strategy. Pre-TGE momentum needed a significant boost to secure top-tier exchange listings.
+        </div>
+        <div class="callout">
+            <strong>Community and offline presence needed scaling.</strong> WeChat community and offline events existed but were too small to drive meaningful brand trust and engagement.
+        </div>
+    </div>
+
+    <!-- How We Built the Narrative -->
+    <div class="card">
+        <h2>Building the Narrative: How "SIGN MAKES TRUST PROGRAMMABLE" Was Born</h2>
+        <p>The best narratives are simple, big, and carry philosophical weight — turning valuation models from P/E to P/Dream. Here's how we got there.</p>
+
+        <div class="accent">
+            <h4>Step 1 — Product Deep Dive</h4>
+            <p>We deconstructed all four product lines: EthSign (2M users, 1.5M contracts), TokenTable ($15M revenue), Sign Pass (global identity), Sign Protocol. Understood the full business landscape before touching the narrative.</p>
+        </div>
+
+        <div class="accent">
+            <h4>Step 2 — Keyword Subtraction</h4>
+            <p>Candidates: contract, trust, signature, collaboration, distribution, fairness... Following the principle of "less is more" — just like Notion only picked "tools" from dozens of possible keywords — we locked <strong style="color:#fff;">Trust</strong> as the single core keyword.</p>
+        </div>
+
+        <div class="accent">
+            <h4>Step 3 — Philosophical Elevation</h4>
+            <blockquote>"Trust is the invisible currency that powers every transaction, every relationship, and every society." — Inspired by Yuval Noah Harari</blockquote>
+            <p>Harari's framework gave us the civilizational dimension. Big enough, credible enough, and perfectly aligned with what Sign actually does — transactions, relationships, society.</p>
+        </div>
+
+        <div class="accent">
+            <h4>Step 4 — Business Alignment</h4>
+            <p style="color:#C4A265;font-style:italic;">"In a tokenized world, blockchain provides the trust foundation for human society, transforming trust from an invisible currency into a programmable framework, and Sign sets the standard for this new era of seamless collaboration across humans, nations, and AI."</p>
+        </div>
+
+        <div class="accent">
+            <h4>Step 5 — The Slogan</h4>
+            <p style="font-size:1.3rem;font-weight:700;color:#DAA550;text-align:center;padding:12px 0;">SIGN MAKES TRUST PROGRAMMABLE.</p>
+            <p style="text-align:center;color:#9A8060;">Echoes the grand theme. Describes exactly what Sign does.</p>
+        </div>
+
+        <div class="accent">
+            <h4>Step 6 — Founder IP Amplification</h4>
+            <p>Mango Labs founder Dov published "Crypto Marketing 101 Lecture 1 — How to Write a Great Narrative" as a public methodology article, using Sign as the core case study. Dual purpose: high-quality endorsement for Sign + demonstration of Mango Labs' expertise.</p>
+        </div>
+
+        <div class="ph-grid" style="align-items:center;">
+            <div style="text-align:center;">
+                <img src="https://i.imgur.com/ASa4NoH.jpg" alt="Sign narrative" class="evidence-image" style="margin:0; height:300px; object-fit:cover;">
+                <p style="color:#888; font-size:0.85rem; margin-top:8px;">Dov's article on crafting the slogan</p>
+            </div>
+            <div style="text-align:center;">
+                <img src="https://i.imgur.com/OtHR8Ns.jpg" alt="Sign narrative adoption" class="evidence-image" style="margin:0; height:300px; object-fit:cover;">
+                <p style="color:#888; font-size:0.85rem; margin-top:8px;">Sign team's official endorsement of the new slogan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- What We Delivered -->
+    <div class="card">
+        <h2>What We Delivered</h2>
+
+        <div class="two-col">
+            <div class="accent" style="display:flex; flex-direction:column;">
+                <h4>KOL Distribution</h4>
+                <ul class="steps">
+                    <li>Standardized KOL content packages built on the new narrative</li>
+                    <li>Tiered distribution — top-tier KOLs for ignition, mid-tier for coverage</li>
+                    <li>Cadence aligned with Pre-TGE milestones for concentrated impact</li>
+                    <li>Targeted VCs, exchanges, and retail across three audience layers</li>
+                </ul>
+                <img src="https://i.imgur.com/TYbPO38.jpg" alt="KOL Distribution Coverage" class="evidence-image">
+                <p style="color:#888; font-size:0.85rem; margin-top:2px; text-align:center;">KOL posts on X</p>
+                <div style="display:flex;gap:12px;margin-top:auto;padding-top:8px;">
+                    <div class="stat" style="flex:1;padding:14px;"><div class="v" style="font-size:1.2rem;">30+</div><div class="l">KOL Posts</div></div>
+                    <div class="stat" style="flex:1;padding:14px;"><div class="v" style="font-size:1.2rem;">400K+</div><div class="l">Impressions</div></div>
+                </div>
+            </div>
+
+            <div class="accent" style="display:flex; flex-direction:column;">
+                <h4>Community & Offline Events</h4>
+                <ul class="steps">
+                    <li>Scaled and operated WeChat community to full daily engagement</li>
+                    <li>Planned and executed multiple offline events for real-world brand presence</li>
+                    <li>Online-offline flywheel: events fed community content, community drove event attendance</li>
+                </ul>
+                <img src="https://i.imgur.com/ss81DYx.jpg" alt="Community & Event Photos" class="evidence-image">
+                <p style="color:#888; font-size:0.85rem; margin-top:2px; margin-bottom:12px; text-align:center;">WeChat community activities and discussions</p>
+                <img src="https://i.imgur.com/T4bbed8.jpg" alt="Community & Event Photos" class="evidence-image">
+                <p style="color:#888; font-size:0.85rem; margin-top:2px; text-align:center;">Sign offline events</p>
+                <div style="display:flex;gap:12px;margin-top:auto;padding-top:8px;">
+                    <div class="stat" style="flex:1;padding:14px;"><div class="v" style="font-size:1.2rem;">800+</div><div class="l">WeChat Members</div></div>
+                    <div class="stat" style="flex:1;padding:14px;"><div class="v" style="font-size:1.2rem;">10+</div><div class="l">Events Held</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creative Marketing — full width -->
+        <div class="accent" style="margin-top:20px;">
+            <h4>Creative Marketing — Orange Glasses Campaign</h4>
+            <p>We designed and orchestrated a viral creative campaign around Sign's signature orange glasses. Coordinated top-tier KOLs like HK Doll to wear the iconic orange glasses in their profile pictures simultaneously, turning individual endorsements into a collective visual movement across Crypto Twitter.</p>
+            <ul class="steps">
+                <li><strong>Visual identity hijack:</strong> Orange glasses became an instantly recognizable symbol tied to Sign</li>
+                <li><strong>Top-KOL coordination:</strong> Synchronized PFP changes across major influencers for maximum visibility</li>
+                <li><strong>Organic virality:</strong> Community members voluntarily adopted the glasses, amplifying reach beyond paid placements</li>
+            </ul>
+            <img src="https://i.imgur.com/PqSM2Vu.jpg" alt="KOL Orange Glasses PFP Campaign" class="evidence-image">
+            <p style="color:#888; font-size:0.85rem; margin-top:2px; text-align:center;">Top KOLs wearing Sign's iconic orange glasses</p>
+        </div>
+
+        <h3>Methodologies Applied</h3>
+        <span class="mpill">Executive IP Building (Methodology Archetype)</span>
+        <span class="mpill">6-Step Narrative System</span>
+        <span class="mpill">Creative Marketing (Visual Identity Campaign)</span>
+        <span class="mpill">X-TG Dual-Loop Engine (WeChat Variant)</span>
+    </div>
+
+    <!-- Results -->
+    <div class="card">
+        <h2>Before & After</h2>
+        <table>
+            <tr><th>Metric</th><th>Before</th><th>After</th><th>Change</th></tr>
+            <tr><td>Brand Narrative</td><td>Fragmented, "signing tool"</td><td>"SIGN MAKES TRUST PROGRAMMABLE"</td><td class="pos">Tool → Global Trust Infra</td></tr>
+            <tr><td>WeChat Community</td><td>~200 members, low engagement</td><td>800+ members, highly active</td><td class="pos">4× growth</td></tr>
+            <tr><td>KOL Coverage</td><td>Sporadic, ~5 posts</td><td>30+ KOL posts</td><td class="pos">6× increase</td></tr>
+            <tr><td>Total Impressions</td><td>~50K</td><td>400K+</td><td class="pos">8× increase</td></tr>
+            <tr><td>Events</td><td>2–3 small events</td><td>10+ events (online + offline)</td><td class="pos">3× increase</td></tr>
+            <tr><td>Exchange Listings</td><td>Not listed</td><td>Binance + Upbit Spot</td><td class="pos">Two top-tier exchanges</td></tr>
+        </table>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card">
+        <h2>Timeline</h2>
+        <div class="tl">
+            <div class="tl-item"><div class="tl-date">Jan 2025</div><div>Mango Labs kicks off Sign engagement</div></div>
+            <div class="tl-item"><div class="tl-date">Feb 2025</div><div>KOL distribution launched</div></div>
+            <div class="tl-item"><div class="tl-date">Feb 2025</div><div>WeChat community goes live</div></div>
+            <div class="tl-item"><div class="tl-date">Feb 2, 2025</div><div>Narrative complete — "SIGN MAKES TRUST PROGRAMMABLE"</div></div>
+            <div class="tl-item"><div class="tl-date">Apr 28, 2025</div><div>Sign listed on Binance Spot</div></div>
+            <div class="tl-item"><div class="tl-date">Apr 29, 2025</div><div>Sign listed on Upbit Spot</div></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="foot">
+        <img src="https://i.imgur.com/EgHEnTN.png" alt="Mango Labs">
+        <p>Case Study by Mango Labs</p>
+        <p style="margin-top:6px;font-size:0.82rem;">Mango Labs — Web3 Growth Partner</p>
+    </footer>
+</div>
+</body>
+</html>
